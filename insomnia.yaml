@@ -1,0 +1,314 @@
+_type: export
+__export_format: 4
+__export_date: 2021-07-15T19:29:19.586Z
+__export_source: insomnia.desktop.app:v2021.4.0
+resources:
+  - _id: req_7aa11bdbca304876a625802b444f081b
+    parentId: wrk_56e01358d8014e89a8547f8db1fe143d
+    modified: 1626019575968
+    created: 1626019564415
+    url: http://localhost:8080/version
+    name: Version
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1625850869555
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: wrk_56e01358d8014e89a8547f8db1fe143d
+    parentId: null
+    modified: 1626374752190
+    created: 1625249160253
+    name: Sensors
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_91502f2a67f041fa917c566cfab545b0
+    parentId: wrk_56e01358d8014e89a8547f8db1fe143d
+    modified: 1626376589584
+    created: 1625249205261
+    url: http://localhost:8080/api/login
+    name: Login
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"username": "test_user",
+        	"password": "test_password"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_575730232ce7406d8a3c2d2c910869dd
+    authentication: {}
+    metaSortKey: -1625850869505
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_3676ee2b2db046eab011c372848c86ca
+    parentId: wrk_56e01358d8014e89a8547f8db1fe143d
+    modified: 1626287832165
+    created: 1625249211133
+    url: http://localhost:8080/api/logout
+    name: Logout
+    description: ""
+    method: POST
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1625850869480
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_33bc665aa3884be6b57d27db4d735a70
+    parentId: wrk_56e01358d8014e89a8547f8db1fe143d
+    modified: 1626374725031
+    created: 1625754345878
+    url: http://localhost:8080/api/sensor/
+    name: Create Sensor
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "API Test Sensor #2",
+        	"description": "Some new sensor.",
+        	"step": 900
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_575730232ce7406d8a3c2d2c910869dd
+    authentication: {}
+    metaSortKey: -1625850869467.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a93475ee022141428a0ab103b3a06f28
+    parentId: wrk_56e01358d8014e89a8547f8db1fe143d
+    modified: 1626368407996
+    created: 1625886972305
+    url: http://localhost:8080/sensor/upload
+    name: Sensor Readings Upload
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        [{"time": 1604883600, "value": 1.0},
+         {"time": 1604887200, "value": 2.0},
+         {"time": 1604890800, "value": 3.0},
+         {"time": 1604966400, "value": 8.0},
+         {"time": 1604970000, "value": 9.0},
+         {"time": 1604973600, "value": 10.0},
+         {"time": 1604977200, "value": 11.0},
+         {"time": 1604980800, "value": 12.0}
+        ]
+    parameters: []
+    headers:
+      - id: pair_091333a853ef45d2ac43b50945a7fba2
+        name: Authorization
+        value: Bearer d08fe36b-06f7-477e-adce-cd96f3d7046a
+        description: ""
+        disabled: true
+      - name: Content-Type
+        value: application/json
+        id: pair_096b17a2d6cb42cc8988bcd50401fc3c
+      - id: pair_b7657077f2814354afe429dd34f0ce76
+        name: Authorization
+        value: Bearer 73f186a9-a367-4218-a2e8-f89da8e64715
+        description: ""
+    authentication: {}
+    metaSortKey: -1625700454887
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8a707e74176f491cb46e504acf14f90c
+    parentId: wrk_56e01358d8014e89a8547f8db1fe143d
+    modified: 1626375492899
+    created: 1626216712129
+    url: http://localhost:8080/api/sensor/1/readings
+    name: API Readings Upload
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"occurred": "2020-11-10",
+          "readings": [
+        		4.0, 10.0, 12.0, 9.2, 13.1, 7.6, 
+        		4.0, 10.0, 12.0, 9.2, 13.1, 7.6, 
+        		4.0, 10.0, 12.0, 9.2, 13.1, 7.6,
+        		4.0, 10.0, 12.0, 9.2, 13.1, 7.6
+        	]
+        }
+    parameters: []
+    headers:
+      - id: pair_091333a853ef45d2ac43b50945a7fba2
+        name: Authorization
+        value: Bearer d08fe36b-06f7-477e-adce-cd96f3d7046a
+        description: ""
+        disabled: true
+      - name: Content-Type
+        value: application/json
+        id: pair_096b17a2d6cb42cc8988bcd50401fc3c
+      - id: pair_b7657077f2814354afe429dd34f0ce76
+        name: Authorization
+        value: Bearer 73f186a9-a367-4218-a2e8-f89da8e64715
+        description: ""
+    authentication: {}
+    metaSortKey: -1625625247603
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_43f05f4eb13b4665940ff8524172aca3
+    parentId: wrk_56e01358d8014e89a8547f8db1fe143d
+    modified: 1626375579056
+    created: 1625866779922
+    url: http://localhost:8080/api/sensor/1/readings?start=2020-11-01&end=2020-11-10
+    name: Get Readings
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1625550040319
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_6c5756dd41c043f7871e4bf215310f76
+    parentId: wrk_56e01358d8014e89a8547f8db1fe143d
+    modified: 1626362050314
+    created: 1625701100940
+    url: http://localhost:8080/api/user
+    name: User
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1625249211148.625
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a8bef94034fb4a0ab4d71c89496478a9
+    parentId: wrk_56e01358d8014e89a8547f8db1fe143d
+    modified: 1626019846509
+    created: 1625754381187
+    url: http://localhost:8080/api/sensor/1
+    name: Get Sensor
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1625249211139.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_b4e677a62c004bc5a071eec441682573
+    parentId: wrk_56e01358d8014e89a8547f8db1fe143d
+    modified: 1626377315000
+    created: 1625754394529
+    url: http://localhost:8080/api/sensor/2
+    name: Delete Sensor
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1625249211136.125
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_bc705932b825c8fa7b07d12c9a6782981331948d
+    parentId: wrk_56e01358d8014e89a8547f8db1fe143d
+    modified: 1625249160362
+    created: 1625249160362
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1625249160362
+    _type: environment
+  - _id: jar_bc705932b825c8fa7b07d12c9a6782981331948d
+    parentId: wrk_56e01358d8014e89a8547f8db1fe143d
+    modified: 1626377325751
+    created: 1625249160366
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_446fbbe887d843228dd77fe17254a270
+    parentId: wrk_56e01358d8014e89a8547f8db1fe143d
+    modified: 1625249160264
+    created: 1625249160264
+    fileName: Smart Meter Project
+    contents: ""
+    contentType: yaml
+    _type: api_spec
