@@ -13,7 +13,6 @@ depends: [
   "ppx_yojson_conv" {>= "v0.14.0"}
   "ptime"
   "re"
-  "reason" {>= "3.6.0" & < "4.0.0"}
   "ocaml-lsp-server" {dev}
 ]
 build: [

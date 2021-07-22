@@ -12,7 +12,6 @@ depends: [
   "ppx_yojson_conv" {= "v0.14.0"}
   "ptime" {= "0.8.5"}
   "re" {= "1.9.0"}
-  "reason" {= "3.7.0"}
 ]
 build: [
   ["dune" "subst"] {pinned}
