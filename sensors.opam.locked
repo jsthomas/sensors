@@ -1,0 +1,32 @@
+opam-version: "2.0"
+synopsis: "Minimalist framework to build extensible HTTP servers and clients"
+description:
+  "Rock is a Unix indpendent API to build extensible HTTP servers and clients. It provides building blocks such as middlewares and handlers (a.k.a controllers)."
+depends: [
+  "caqti" {= "1.6.0"}
+  "caqti-driver-postgresql" {= "1.6.0"}
+  "caqti-lwt" {= "1.6.0"}
+  "dream" {= "1.0.0~alpha2"}
+  "dune" {= "2.8.5"}
+  "ocaml" {= "4.11.1"}
+  "ppx_yojson_conv" {= "v0.14.0"}
+  "ptime" {= "0.8.5"}
+  "re" {= "1.9.0"}
+  "reason" {= "3.7.0"}
+]
+build: [
+  ["dune" "subst"] {pinned}
+  [
+    "dune"
+    "build"
+    "-p"
+    name
+    "-j"
+    jobs
+    "@install"
+    "@runtest" {with-test}
+    "@doc" {with-doc}
+  ]
+]
+name: "sensors"
+version: "dev"
