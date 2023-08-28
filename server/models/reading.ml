@@ -1,5 +1,5 @@
 module type DB = Caqti_lwt.CONNECTION
-module R = Caqti_request
+open Caqti_request.Infix
 module T = Caqti_type
 module Time = Lib.Time
 
@@ -40,8 +40,8 @@ let sql_date =
 
 let insert =
   let query =
-    R.exec T.(tup3 T.int sql_date sql_readings)
-      {|
+    (T.(tup3 T.int sql_date sql_readings) -->. T.unit)
+      @:- Printf.sprintf {|
       INSERT INTO sensor_reading (sensor, occurred, readings)
       VALUES ($1, $2, $3)
       ON CONFLICT (sensor, occurred) DO UPDATE SET readings = $3
@@ -54,8 +54,8 @@ let insert =
 
 let read_range =
   let query =
-    R.collect T.(tup4 T.int T.int sql_date sql_date) T.(tup2 sql_date sql_readings)
-      {|
+    (T.(tup4 T.int T.int sql_date sql_date) -->? T.(tup2 sql_date sql_readings))
+     @:- {|
       SELECT sr.occurred, sr.readings FROM sensor_reading sr
       INNER JOIN user_sensor us ON
         sr.sensor = $2 AND us.sensor = sr.sensor AND us.app_user = $1
@@ -72,8 +72,8 @@ let read_range =
 
 let read_day =
   let query =
-    R.find_opt T.(tup2 T.int sql_date) sql_readings
-      {|
+   (T.(tup2 T.int sql_date) -->? sql_readings)
+     @:- Printf.sprintf {|
       SELECT sr.readings FROM sensor_reading sr
       WHERE
         sr.sensor = $1 AND sr.occurred = $2

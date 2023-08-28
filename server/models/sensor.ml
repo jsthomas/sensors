@@ -1,5 +1,5 @@
 module type DB = Caqti_lwt.CONNECTION
-module R = Caqti_request
+open Caqti_request.Infix
 module T = Caqti_type
 
 let (>>=) = Lwt.bind
@@ -15,8 +15,8 @@ type t = {
 
 let create_sensor  =
   let query =
-    R.find T.(tup4 T.string T.string T.int T.int) T.int
-      {|
+    (T.(tup4 T.string T.string T.int T.int) -->! T.int)
+     @:- Printf.sprintf  {|
        INSERT INTO sensor (name, description, api_key, step)
        VALUES ($1, $2, $3, $4) RETURNING id
       |} in
@@ -27,8 +27,8 @@ let create_sensor  =
 
 let create_user_relationship =
   let query =
-    R.exec T.(tup2 T.int T.int)
-      "INSERT INTO user_sensor (app_user, sensor) VALUES ($1, $2)" in
+    (T.(tup2 T.int T.int) -->. T.unit)
+     @:- Printf.sprintf "INSERT INTO user_sensor (app_user, sensor) VALUES ($1, $2)" in
   fun user_id sensor_id (module Db: DB) ->
     let%lwt result = Db.exec query (user_id, sensor_id) in
     Caqti_lwt.or_fail result
@@ -43,8 +43,8 @@ let create user_id name description step db =
 
 let get =
   let query =
-    R.find_opt T.(tup2 T.int T.int) T.(tup4 T.string T.string T.string T.int)
-      {|
+    (T.(tup2 T.int T.int) -->? T.(tup4 T.string T.string T.string T.int))
+      @:- Printf.sprintf {|
        SELECT s.name, s.description, k.uuid, s.step
        FROM sensor s
        INNER JOIN user_sensor us
@@ -65,8 +65,8 @@ let get =
 
 let delete =
   let query =
-    R.exec T.(tup2 T.int T.int)
-      {|
+    (T.(tup2 T.int T.int) -->. T.unit)
+      @:- Printf.sprintf {|
        DELETE FROM sensor WHERE id IN
        (SELECT s.id FROM
         Sensor s
@@ -81,8 +81,8 @@ let delete =
 
 let from_key =
   let query =
-    R.collect T.string (T.tup4 T.int T.string T.string T.int)
-      {|
+    (T.string -->? (T.tup4 T.int T.string T.string T.int))
+     @:- Printf.sprintf {|
       SELECT s.id, s.name, s.description, s.step FROM sensor s
       INNER JOIN api_key k
       ON s.api_key = k.id AND k.uuid = $1
