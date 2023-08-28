@@ -1,11 +1,7 @@
 module type DB = Caqti_lwt.CONNECTION
 
-type t = {
-  username: string;
-  name: string;
-  sensors: int list;
-} [@@deriving yojson]
-
+type t = { username : string; name : string; sensors : int list }
+[@@deriving yojson]
 
 val get : string -> string -> (module DB) -> int option Lwt.t
 (* Recover the ID associated with the input username/password pair, or
