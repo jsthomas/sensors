@@ -103,7 +103,7 @@ type sensor_create_doc = {
 
 
 let id_validator key handler request =
-  let sensor_id = Dream.param key request |> int_of_string_opt in
+  let sensor_id = Dream.param request key |> int_of_string_opt in
   match sensor_id with
   | None -> Dream.empty `Bad_Request
   | Some m_id ->
@@ -145,8 +145,8 @@ let date_query_param key ~default request =
 let get_readings sensor_id request =
   let today = Time.today () in
   let user_id = get_user_id request in
-  let start_d = date_query_param "start" ~default:today request in
-  let end_d = date_query_param "end" ~default:today request in
+  let start_d = date_query_param request ~default:today "start" in
+  let end_d = date_query_param  request ~default:today "end" in
   let%lwt readings = Dream.sql request (Reading.read_range user_id sensor_id start_d end_d) in
   `List (List.map Reading.yojson_of_t readings)
   |> json_response
@@ -186,7 +186,7 @@ let write_readings sensor_id =
 
 
 let api_key_required handler request =
-  match Dream.header "Authorization" request with
+  match Dream.header request "Authorization"  with
   | None -> Dream.empty `Bad_Request
   | Some key ->
     let key = Stringext.replace_all ~pattern:"Bearer " ~with_:"" key in
@@ -283,4 +283,3 @@ let () =
       Dream.post "/upload" @@ api_key_required sensor_upload;
     ]
   ]
-  @@ Dream.not_found
