@@ -53,7 +53,7 @@ should be able to run the server via
 
 ```
 opam install caqti-driver-postgresql caqti-lwt dream lwt_ppx ppx_yojson_conv ptime re
-dune exec server/bin/server
+dune exec server/bin/server.exe
 ```
 
 I built this project with version 4.11.1 of the compiler.
