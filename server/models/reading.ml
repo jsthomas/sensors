@@ -1,7 +1,10 @@
 module type DB = Caqti_lwt.CONNECTION
-open Caqti_request.Infix
-module T = Caqti_type
 module Time = Lib.Time
+module T = Caqti_type
+
+open Caqti_request.Infix
+open Ppx_yojson_conv_lib.Yojson_conv.Primitives
+
 
 type readings = float option array [@@deriving yojson]
 

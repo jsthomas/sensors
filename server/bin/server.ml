@@ -1,6 +1,7 @@
 module type DB = Caqti_lwt.CONNECTION
 module R = Caqti_request
 module T = Caqti_type
+open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 module Time = Lib.Time
 module Reading = Models.Reading
