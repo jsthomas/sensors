@@ -18,7 +18,6 @@ let create =
 
 let touch =
   let query =
-    (*TODO: SIMON! *)
     (T.string -->. T.unit)
     @:- Printf.sprintf "UPDATE api_key SET last_used = now() WHERE uuid = $1"
   in
