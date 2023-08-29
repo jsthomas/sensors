@@ -14,7 +14,7 @@ type t = {
 (* Note: Storing passwords in cleartext is a bad idea in a production app.*)
 let get =
   let query =
-    (T.(tup2 T.string T.string) -->? T.int)
+    T.(tup2 string string -->? int)
     @:- Printf.sprintf
           "SELECT id FROM app_user WHERE username = ? and password = ?"
   in
@@ -24,7 +24,7 @@ let get =
 
 let sensors =
   let query =
-    (T.int -->? T.int)
+    T.(int -->? int)
     @:- Printf.sprintf "SELECT sensor FROM user_sensor WHERE app_user = ?"
   in
   fun user_id (module Db : DB) ->
@@ -33,7 +33,7 @@ let sensors =
 
 let details =
   let query =
-    (T.int -->? T.(tup2 T.string T.string))
+    T.(int -->? tup2 string string)
     @:- Printf.sprintf "SELECT username, name FROM app_user WHERE id = ?"
   in
   fun user_id (module Db : DB) ->

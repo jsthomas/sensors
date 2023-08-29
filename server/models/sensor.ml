@@ -17,7 +17,7 @@ type t = {
 
 let create_sensor =
   let query =
-    (T.(tup4 T.string T.string T.int T.int) -->! T.int)
+    T.(tup4 string string int int -->! int)
     @:- Printf.sprintf
           {|
        INSERT INTO sensor (name, description, api_key, step)
@@ -30,7 +30,7 @@ let create_sensor =
 
 let create_user_relationship =
   let query =
-    (T.(tup2 T.int T.int) -->. T.unit)
+    T.(tup2 int int -->. unit)
     @:- Printf.sprintf
           "INSERT INTO user_sensor (app_user, sensor) VALUES ($1, $2)"
   in
@@ -46,7 +46,7 @@ let create user_id name description step db =
 
 let get =
   let query =
-    (T.(tup2 T.int T.int) -->? T.(tup4 T.string T.string T.string T.int))
+    T.(tup2 int int -->? tup4 string string string int)
     @:- Printf.sprintf
           {|
        SELECT s.name, s.description, k.uuid, s.step
@@ -68,7 +68,7 @@ let get =
 
 let delete =
   let query =
-    (T.(tup2 T.int T.int) -->. T.unit)
+    T.(tup2 int int -->. unit)
     @:- Printf.sprintf
           {|
        DELETE FROM sensor WHERE id IN
@@ -84,7 +84,7 @@ let delete =
 
 let from_key =
   let query =
-    (T.string -->? T.tup4 T.int T.string T.string T.int)
+    T.(string -->? tup4 int string string int)
     @:- Printf.sprintf
           {|
       SELECT s.id, s.name, s.description, s.step FROM sensor s

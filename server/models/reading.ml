@@ -36,7 +36,7 @@ let sql_date =
 
 let insert =
   let query =
-    (T.(tup3 T.int sql_date sql_readings) -->. T.unit)
+    T.(tup3 int sql_date sql_readings -->. unit)
     @:- Printf.sprintf
           {|
       INSERT INTO sensor_reading (sensor, occurred, readings)
@@ -50,8 +50,9 @@ let insert =
 
 let read_range =
   let query =
-    (T.(tup4 T.int T.int sql_date sql_date) -->? T.(tup2 sql_date sql_readings))
-    @:- {|
+    T.(tup4 int int sql_date sql_date -->? tup2 sql_date sql_readings)
+    @:- Printf.sprintf
+          {|
       SELECT sr.occurred, sr.readings FROM sensor_reading sr
       INNER JOIN user_sensor us ON
         sr.sensor = $2 AND us.sensor = sr.sensor AND us.app_user = $1
@@ -69,7 +70,7 @@ let read_range =
 
 let read_day =
   let query =
-    (T.(tup2 T.int sql_date) -->? sql_readings)
+    (T.(tup2 int sql_date) -->? sql_readings)
     @:- Printf.sprintf
           {|
       SELECT sr.readings FROM sensor_reading sr
