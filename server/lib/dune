@@ -1,5 +1,5 @@
 (library
-   (name lib)
-   (libraries ptime.clock.os ptime)
-   (preprocess (pps ppx_yojson_conv))
-)
+ (name lib)
+ (libraries ptime.clock.os ptime)
+ (preprocess
+  (pps ppx_yojson_conv)))

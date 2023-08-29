@@ -9,7 +9,7 @@ depends: [
   "dream" {= "1.0.0~alpha2"}
   "dune" {= "2.8.5"}
   "ocaml" {= "4.11.1"}
-  "ppx_yojson_conv" {= "v0.14.0"}
+  "ppx_yojson_conv" {= "v0.16.0"}
   "ptime" {= "0.8.5"}
   "re" {= "1.9.0"}
 ]
