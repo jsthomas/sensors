@@ -10,7 +10,7 @@ depends: [
   "caqti" {>= "1.6.0"}
   "caqti-lwt" {>= "1.6.0"}
   "caqti-driver-postgresql" {>= "1.6.0"}
-  "ppx_yojson_conv" {>= "v0.14.0"}
+  "ppx_yojson_conv" {>= "v0.16.0"}
   "ptime"
   "re"
   "ocaml-lsp-server" {dev}

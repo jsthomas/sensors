@@ -1,15 +1,15 @@
 module type DB = Caqti_lwt.CONNECTION
 
 type t = {
-  id: int;
-  name: string;
-  description: string;
-  api_key: string;
-  step: int;  (* Number of seconds between readings. *)
-} [@@deriving yojson]
+  id : int;
+  name : string;
+  description : string;
+  api_key : string;
+  step : int; (* Number of seconds between readings. *)
+}
+[@@deriving yojson]
 
-
-val create: int -> string -> string -> int -> (module DB) -> t Lwt.t
+val create : int -> string -> string -> int -> (module DB) -> t Lwt.t
 (* Generate a new sensor record for a given user ID, sensor name,
    description, and step size. *)
 
