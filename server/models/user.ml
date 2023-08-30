@@ -11,6 +11,27 @@ type t = {
 }
 [@@deriving yojson]
 
+type user = { id : int; username : string; name : string; password : string }
+[@@deriving yojson]
+
+let create_new_user =
+  let query =
+    T.(tup3 string string string -->! int)
+    @:- Printf.sprintf
+          {|
+      INSERT INTO app_user (username, name, password) 
+      VALUES ($1, $2, $3) RETURNING id
+    |}
+  in
+  fun username name password (module Db : DB) ->
+    (*TODO: It is not clear here how add of duplicate user names is avoided *)
+    let%lwt user_or_error = Db.find query (username, name, password) in
+    Caqti_lwt.or_fail user_or_error
+
+let create username name password db =
+  let%lwt id = create_new_user username name password db in
+  Lwt.return { id; username; name; password }
+
 (* Note: Storing passwords in cleartext is a bad idea in a production app.*)
 let get =
   let query =

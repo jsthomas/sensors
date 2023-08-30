@@ -6,6 +6,7 @@ open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 module Time = Lib.Time
 module Reading = Models.Reading
 module Sensor = Models.Sensor
+module User = Models.User
 
 let ( >>= ) = Lwt.bind
 let ( >>=? ) = Option.bind
@@ -15,7 +16,6 @@ let int_of_string_opt x = x |> Int32.of_string_opt |>? Int32.to_int
 let json_response ?status x = x |> Yojson.Safe.to_string |> Dream.json ?status
 
 type error_doc = { error : string } [@@deriving yojson]
-type login_doc = { username : string; password : string } [@@deriving yojson]
 
 let json_receiver json_parser handler request =
   let%lwt body = Dream.body request in
@@ -28,6 +28,28 @@ let json_receiver json_parser handler request =
       { error = "Received invalid JSON input." }
       |> yojson_of_error_doc
       |> json_response ~status:`Bad_Request
+
+type new_user_doc = { username : string; name : string; password : string }
+[@@deriving yojson]
+
+let create_user =
+  let user_base user_doc request =
+    let%lwt user_id =
+      (* TODO: It would be nicer if we check if user exists by email maybe. *)
+      Dream.sql request (Models.User.get user_doc.username user_doc.password)
+    in
+    match user_id with
+    | Some _ -> Dream.empty `Forbidden
+    | None ->
+        let%lwt user =
+          Dream.sql request
+            (User.create user_doc.username user_doc.name user_doc.password)
+        in
+        User.yojson_of_user user |> json_response
+  in
+  json_receiver new_user_doc_of_yojson user_base
+
+type login_doc = { username : string; password : string } [@@deriving yojson]
 
 let login =
   let login_base login_doc request =
@@ -218,6 +240,7 @@ let () =
        [
          Dream.get "/" version;
          Dream.get "/version" version;
+         Dream.post "/api/create_acc" create_user;
          Dream.post "/api/login" login;
          Dream.post "/api/logout" logout;
          Dream.scope "/api" [ login_required ]

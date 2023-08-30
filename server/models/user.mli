@@ -3,6 +3,10 @@ module type DB = Caqti_lwt.CONNECTION
 type t = { username : string; name : string; sensors : int list }
 [@@deriving yojson]
 
+type user = { id : int; username : string; name : string; password : string }
+[@@deriving yojson]
+
+val create : string -> string -> string -> (module DB) -> user Lwt.t
 val get : string -> string -> (module DB) -> int option Lwt.t
 (* Recover the ID associated with the input username/password pair, or
    None if the username/password combo is invalid.*)
