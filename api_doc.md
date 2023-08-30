@@ -7,6 +7,19 @@ This document describes all of the endpoints `sensors` supports, with brief exam
 Retrieve text indicating the version of the server (e.g. `Sensors
 v0.0.0`).
 
+### POST `/api/create_acc`
+
+Create a new user account, provided the credentials in the JSON body are valid.
+
+Example body:
+```json
+{
+	"username": "new_test_user",
+  "name": "New test user",
+	"password": "new test_password"
+}
+```
+
 ### POST `/api/login`
 
 Start a new session, provided the credentials in the JSON body are valid.
